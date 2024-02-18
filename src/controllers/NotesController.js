@@ -56,10 +56,11 @@ class NotesController {
     }
 
     async index(request, response){
-        const { user_id } = request.query;
+        const { title, user_id } = request.query;
 
         const notes = await knex("notes")
             .where({ user_id })
+            .whereLike("title", `%${title}%`) //Quando se usa % antes e depois da variável, indica ao BD para verificar tanto antes quanto depois se existe o termo citado
             .orderBy("title");
 
         return response.json(notes);
