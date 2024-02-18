@@ -7,6 +7,7 @@ const NotesController = require('../controllers/NotesController') //VScode point
 const notesController = new NotesController()
 
 notesRoutes.post("/:user_id", notesController.create) //If used, middleware for a specific route
-notesRoutes.get("/:id", notesController.show) //If used, middleware for a specific route
+notesRoutes.get("/:id", notesController.show) 
+notesRoutes.delete("/:id", notesController.delete)
 
 module.exports = notesRoutes
