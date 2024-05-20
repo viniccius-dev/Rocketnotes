@@ -16,12 +16,12 @@ class DiskStorage {
         const filePath = path.resolve(uploadConfig.UPLOADS_FOLDER, file);
 
         try {
-            await fs.promises.stat(filePath);
+            await fs.promises.stat(filePath); // Verifica se o arquivo está disponível
         } catch {
             return;
         }
 
-        await fs.promises.unlink(filePath);
+        await fs.promises.unlink(filePath); // Remove um arquivo
     }
 }
 
