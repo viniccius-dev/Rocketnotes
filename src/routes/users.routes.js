@@ -6,6 +6,7 @@ const usersRoutes = Router()
 const upload = multer(uploadConfig.MULTER)
 
 const UsersController = require('../controllers/usersController') //VScode pointing out non-existent error in the correct path which would be: '../controllers/UsersController'
+const UserAvatarController = require('../controllers/UserAvatarController')
 const ensureAuthenticated = require("../middlewares/ensureAuthenticated")
 
 /*
@@ -20,6 +21,7 @@ function myMiddleware(request, response, next) {
 */
 
 const usersController = new UsersController()
+const userAvatarController = new UserAvatarController()
 
 /* Method GET
 usersRoutes.get("/message", (request, response) => {
@@ -51,9 +53,6 @@ usersRoutes.get("/users", (request, response) => {
 
 usersRoutes.post("/", usersController.create) //If used, middleware for a specific route
 usersRoutes.put("/", ensureAuthenticated,  usersController.update)
-usersRoutes.patch("/avatar", ensureAuthenticated, upload.single("avatar"), (request, response) => {
-    console.log(request.file.filename);
-    response.json();
-})
+usersRoutes.patch("/avatar", ensureAuthenticated, upload.single("avatar"), userAvatarController.update)
 
 module.exports = usersRoutes
