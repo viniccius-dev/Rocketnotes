@@ -2,7 +2,8 @@ const { Router } = require("express")
 
 const usersRoutes = Router()
 
-const UsersController = require('../controllers/usersController') //VScode pointing out non-existent error in the correct path which would be: '../controllers/UsersController'
+const UsersController = require('../controllers/usersController'); //VScode pointing out non-existent error in the correct path which would be: '../controllers/UsersController'
+const ensureAuthenticated = require("../middlewares/ensureAuthenticated");
 
 /*
 function myMiddleware(request, response, next) {
@@ -46,6 +47,6 @@ usersRoutes.get("/users", (request, response) => {
 //usersRoutes.use(myMiddleware)
 
 usersRoutes.post("/", usersController.create) //If used, middleware for a specific route
-usersRoutes.put("/:id", usersController.update)
+usersRoutes.put("/", ensureAuthenticated,  usersController.update)
 
 module.exports = usersRoutes
