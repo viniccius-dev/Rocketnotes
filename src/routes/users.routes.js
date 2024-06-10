@@ -5,7 +5,7 @@ const uploadConfig = require("../configs/upload");
 const usersRoutes = Router()
 const upload = multer(uploadConfig.MULTER)
 
-const UsersController = require('../controllers/usersController') //VScode pointing out non-existent error in the correct path which would be: '../controllers/UsersController'
+const UsersController = require('../controllers/UsersController') //VScode pointing out non-existent error in the correct path which would be: '../controllers/UsersController'
 const UserAvatarController = require('../controllers/UserAvatarController')
 const ensureAuthenticated = require("../middlewares/ensureAuthenticated")
 
