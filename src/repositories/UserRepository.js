@@ -1,4 +1,4 @@
-const sqliteConnection = require("../database/sqlite")
+const sqliteConnection = require("../database/sqlite");
 
 class UserRepository {
     async findByEmail(email) {

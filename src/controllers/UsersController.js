@@ -1,6 +1,9 @@
 const { hash, compare } = require("bcryptjs")
 const AppError = require("../utils/AppError")
 
+const UserRepository = require("../repositories/UserRepository");
+const sqliteConnection = require("../database/sqlite");
+
 class UsersController {
     /* MAXIMUM 05 METHODS PER CLASS
         * index - GET to list multiple registries.
@@ -11,27 +14,19 @@ class UsersController {
      */
 
     async create(request, response) {
-        const { name, email, password } = request.body
-    
-        /*response.send(`
-            User: ${name}.
-            Email: ${email}.
-            Password: ${password}.
-        `)
+        const { name, email, password } = request.body;
 
-        if(!name) {
-            throw new AppError("The name is required!")
-        }
-        
-        response.status(201).json({ name, email, password })
-        */
+        const userRepository = new UserRepository();
 
+        const checkUserExist = await userRepository.findByEmail(email);
 
         if(checkUserExist) {
             throw new AppError("This email already in use.")
         }
 
         const hashedPassword = await hash(password, 8)
+
+        await userRepository.create({ name, email, hashedPassword })
 
         return response.status(201).json()
     }
