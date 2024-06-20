@@ -1,4 +1,4 @@
-const { hash, compare } = require("bcryptjs");
+const { hash } = require("bcryptjs");
 const AppError = require("../utils/AppError");
 
 class UserCreateService {
@@ -13,9 +13,11 @@ class UserCreateService {
             throw new AppError("This email already in use.")
         }
 
-        const hashedPassword = await hash(password, 8)
+        const hashedPassword = await hash(password, 8);
 
-        await this.userRepository.create({ name, email, hashedPassword })
+        const userCreated = await this.userRepository.create({ name, email, password: hashedPassword });
+
+        return userCreated;
     }
 }
 
